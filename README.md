@@ -1,5 +1,9 @@
 # DarkroomJS
 
+Now with added DARK!!!
+
+Added two plugins for redact and zoom
+
 ![Bower](https://img.shields.io/bower/v/darkroom.svg)
 ![License MIT](http://img.shields.io/badge/license-MIT-blue.svg)
 
