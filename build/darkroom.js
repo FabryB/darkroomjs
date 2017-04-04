@@ -1395,8 +1395,9 @@ Darkroom.plugins['save'] = Darkroom.Plugin.extend({
 
     "use strict";
 
-    var fabric  = global.fabric || (global.fabric = { }),
-        extend = fabric.util.object.extend;
+    // var fabric  = global.fabric || (global.fabric = { }),
+    
+        var extend = fabric.util.object.extend;
 
     fabric.Image.filters.Redact = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
 
