@@ -22,7 +22,9 @@
     "gulp-svgstore": "^5.0.0",
     "gulp-uglify": "^1.4.1",
     "gulp-util": "^3.0.0",
-    "rimraf": "^2.2.8"
+    "rimraf": "^2.2.8",
+    "st": "1.2.0",
+    "gulp-version-number": "^0.1.6"
   },
   "scripts": {
     "start": "node_modules/.bin/gulp server build --prod",

@@ -10,14 +10,24 @@ var sourcemaps = require('gulp-sourcemaps')
 var svgmin = require('gulp-svgmin')
 var svgstore = require('gulp-svgstore')
 var uglify = require('gulp-uglify')
+var st = require('st')
+var versionNumber = require('gulp-version-number')
 
 
 //
 // Variables
 //
+var demoDir = './demo';
 var srcDir = './lib';
 var distDir = './build';
 var isDebug = !gutil.env.prod;
+var versionConfig = {
+  'value': '%MDS%',
+  'append': {
+    'key': 'v',
+    'to': ['css', 'js'],
+  }
+}
 
 //
 // Default
@@ -37,14 +47,14 @@ gulp.task('clean', function(cb) {
 // Build
 //
 gulp.task('build', ['clean'], function() {
-  gulp.start('scripts', 'styles');
+  gulp.start('scripts', 'styles', 'html');
 });
 
 //
 // Watch
 //
 gulp.task('watch', ['server'], function() {
-  gulp.watch(srcDir + '/js/**/*.js', ['scripts']);
+  gulp.watch(srcDir + '/js/**/*.js', ['scripts', 'html']);
 
   gulp.watch(srcDir + '/css/**/*.scss', ['styles']);
 });
@@ -56,7 +66,12 @@ gulp.task('server', function() {
   connect.server({
     root: './demo',
     port: 2222,
-    livereload: false
+    livereload: false,
+    middleware: function(connect, opt) {
+      return [
+        st({ path: './build', url: '/build' })
+      ];
+    }
   });
 });
 
@@ -94,7 +109,11 @@ gulp.task('scripts', function () {
       .pipe(inject(svgs, { transform: fileContents }))
       .pipe(isDebug ? gutil.noop() : uglify({mangle: false}))
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
-    .pipe(gulp.dest(distDir))
+    .pipe(gulp.dest(distDir));
+
+   gulp.src(demoDir + '/index.html')
+    .pipe(versionNumber(versionConfig))
+    .pipe(gulp.dest(demoDir));
 })
 
 //
@@ -109,6 +128,15 @@ gulp.task('styles', function () {
       }))
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest(distDir))
+})
+
+//
+// HTML
+//
+gulp.task('html', function () {
+  gulp.src(demoDir + '/index.html')
+    .pipe(versionNumber(versionConfig))
+    .pipe(gulp.dest(demoDir))
 })
 
 // var gulp = require('gulp');

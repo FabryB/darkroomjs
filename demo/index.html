@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>DarkroomJS</title>
-  <link rel="stylesheet" href="../build/darkroom.css">
-  <link rel="stylesheet" href="./css/page.css">
+  <link rel="stylesheet" href="./build/darkroom.css?v=f7b926b2b5d8caa52e4991575a188207">
+  <link rel="stylesheet" href="./css/page.css?v=f7b926b2b5d8caa52e4991575a188207">
 </head>
 <body>
   <header id="header">
@@ -33,13 +33,13 @@
           It is based on the awesome <a href="http://fabricjs.com/">FabricJS</a> library
           to handle images in HTML5 canvas.
         </p>
-
+        <input type="file" id="file" />
         <div class="figure-wrapper">
           <figure class="image-container target">
-            <img src="./images/domokun-big.jpg" alt="DomoKun" id="target">
+            <img src="" alt="DomoKun" id="target" crossOrigin="Anonymous">
 
             <figcaption class="image-meta">
-              <a target="_blank" href="http://www.flickr.com/photos/bentorode/5176910387/">
+              <a target="_blank" href="http://www.flickr.com/photos/bentorode/5176910387/" >
                 ©
                 <strong class="image-meta-title">DomoKun</strong>
                 by
@@ -131,18 +131,35 @@
     </div>
   </div>
 
-  <script src="./vendor/fabric.js"></script>
-  <script src="../build/darkroom.js"></script>
+  <script src="./vendor/fabric.js?v=f7b926b2b5d8caa52e4991575a188207"></script>
+  <script src="./build/darkroom.js?v=f7b926b2b5d8caa52e4991575a188207"></script> 
+
 
   <script>
+  
+
     var dkrm = new Darkroom('#target', {
       // Size options
-      minWidth: 100,
+      minWidth: 480,
       minHeight: 100,
-      maxWidth: 600,
-      maxHeight: 500,
-      ratio: 4/3,
+      maxWidth: 1080,
+      //maxHeight: 500,
+      //ratio: 4/3,
       backgroundColor: '#000',
+      orientation: {
+        maxWidthPortrait: 480,
+        maxWidthLandscape: 853,
+        acceptedRatios: {
+          landscape: [
+            { ratio: '4:3', value: 1.333333333 },
+            { ratio: '16:9', value: 1.77777777778 },
+          ],
+          portrait: [
+            { ratio: '3:4', value: 0.75},
+            { ratio: '9:16', value: 0.5625},
+          ]
+        }
+      },
 
       // Plugins options
       plugins: {
@@ -159,18 +176,9 @@
       initialize: function() {
         var cropPlugin = this.plugins['crop'];
         // cropPlugin.selectZone(170, 25, 300, 300);
-        cropPlugin.requireFocus();
+        //cropPlugin.requireFocus();
       }
     });
-  </script>
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-23657373-2', 'mattketmo.github.io');
-    ga('send', 'pageview');
   </script>
 </body>
 </html>
