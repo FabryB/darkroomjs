@@ -55,7 +55,7 @@ gulp.task('build', ['clean'], function() {
 //
 gulp.task('watch', ['server'], function() {
   gulp.watch(srcDir + '/js/**/*.js', ['scripts']);
-
+  gulp.watch(srcDir + '/*.html', ['scripts']);
   gulp.watch(srcDir + '/css/**/*.scss', ['styles']);
 });
 
@@ -66,7 +66,7 @@ gulp.task('server', function() {
   connect.server({
     root: './demo',
     port: 2222,
-    livereload: false,
+    livereload: true,
     middleware: function(connect, opt) {
       return [
         st({ path: './build', url: '/build' })
@@ -97,11 +97,12 @@ gulp.task('scripts', function () {
     srcDir + '/js/plugins/darkroom.rotate.js',
     srcDir + '/js/plugins/darkroom.crop.js',
     srcDir + '/js/plugins/darkroom.save.js',
+    srcDir + '/js/plugins/darkroom.color.js',
     srcDir + '/js/filters/redact.js',
     srcDir + '/js/plugins/redact.js',
     srcDir + '/js/plugins/zoom.js',
   ];
-
+/*
   gulp.src(files)
     .pipe(plumber())
     .pipe(isDebug ? sourcemaps.init() : gutil.noop())
@@ -110,10 +111,24 @@ gulp.task('scripts', function () {
       .pipe(isDebug ? gutil.noop() : uglify({mangle: false}))
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest(distDir));
+*/
+  
+
+  gulp.src(srcDir + '/js/core/bootstrap.js')
+    .pipe(plumber())
+    .pipe(isDebug ? sourcemaps.init() : gutil.noop())
+      .pipe(concat('bootstrap.js', {newLine: ';'}))
+      .pipe(inject(svgs, { transform: fileContents }))
+      .pipe(isDebug ? gutil.noop() : uglify({mangle: false}))
+    .pipe(isDebug ? sourcemaps.write() : gutil.noop())
+    .pipe(gulp.dest(distDir));
 
    gulp.src(srcDir + '/index.html')
     .pipe(versionNumber(versionConfig))
     .pipe(gulp.dest(demoDir));
+
+    gulp.src(files)
+    .pipe(gulp.dest(distDir));
 })
 
 //
