@@ -102,7 +102,7 @@ gulp.task('scripts', function () {
     srcDir + '/js/plugins/redact.js',
     srcDir + '/js/plugins/zoom.js',
   ];
-/*
+
   gulp.src(files)
     .pipe(plumber())
     .pipe(isDebug ? sourcemaps.init() : gutil.noop())
@@ -111,9 +111,9 @@ gulp.task('scripts', function () {
       .pipe(isDebug ? gutil.noop() : uglify({mangle: false}))
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest(distDir));
-*/
-  
 
+  
+/*
   gulp.src(srcDir + '/js/core/bootstrap.js')
     .pipe(plumber())
     .pipe(isDebug ? sourcemaps.init() : gutil.noop())
@@ -122,13 +122,14 @@ gulp.task('scripts', function () {
       .pipe(isDebug ? gutil.noop() : uglify({mangle: false}))
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest(distDir));
-
+*/
    gulp.src(srcDir + '/index.html')
     .pipe(versionNumber(versionConfig))
     .pipe(gulp.dest(demoDir));
-
+/*
     gulp.src(files)
     .pipe(gulp.dest(distDir));
+    */
 })
 
 //
