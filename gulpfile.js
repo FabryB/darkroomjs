@@ -112,24 +112,13 @@ gulp.task('scripts', function () {
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest(distDir));
 
+  gulp.src(['./build/darkroom.js'])
+    .pipe(gulp.dest(demoDir + '/vendor'));
   
-/*
-  gulp.src(srcDir + '/js/core/bootstrap.js')
-    .pipe(plumber())
-    .pipe(isDebug ? sourcemaps.init() : gutil.noop())
-      .pipe(concat('bootstrap.js', {newLine: ';'}))
-      .pipe(inject(svgs, { transform: fileContents }))
-      .pipe(isDebug ? gutil.noop() : uglify({mangle: false}))
-    .pipe(isDebug ? sourcemaps.write() : gutil.noop())
-    .pipe(gulp.dest(distDir));
-*/
    gulp.src(srcDir + '/index.html')
     .pipe(versionNumber(versionConfig))
     .pipe(gulp.dest(demoDir));
-/*
-    gulp.src(files)
-    .pipe(gulp.dest(distDir));
-    */
+
 })
 
 //
@@ -143,7 +132,11 @@ gulp.task('styles', function () {
         outputStyle: isDebug ? 'nested' : 'compressed'
       }))
     .pipe(isDebug ? sourcemaps.write() : gutil.noop())
-    .pipe(gulp.dest(distDir))
+    .pipe(gulp.dest(distDir));
+
+  
+  gulp.src(['./build/darkroom.css'])
+    .pipe(gulp.dest(demoDir + '/css'));
 })
 
 //
