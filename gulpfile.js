@@ -17,7 +17,7 @@ var versionNumber = require('gulp-version-number')
 //
 // Variables
 //
-var demoDir = './demo';
+var demoDir = './docs';
 var srcDir = './lib';
 var distDir = './build';
 var isDebug = !gutil.env.prod;
@@ -64,7 +64,7 @@ gulp.task('watch', ['server'], function() {
 //
 gulp.task('server', function() {
   connect.server({
-    root: './demo',
+    root: './docs',
     port: 2222,
     livereload: true,
     middleware: function(connect, opt) {
